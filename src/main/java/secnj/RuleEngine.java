@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 
-//import org.json.JSONObject;
 
 public class  RuleEngine{
     private final static HashMap<String, JSONArray> rules = new HashMap<>();
