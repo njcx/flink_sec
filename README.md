@@ -1,4 +1,4 @@
-# 使用Flink 开发规则引擎
+# 使用Flink 开发的规则引擎，用于NIDS和HIDS、日志审计
 
 支持正则、子串、等于，支持多字段 "和" "或" 检测， 支持频率检测,支持自定义函数检测,自定义函数可以满足几乎所有数据类型的检测
 
@@ -12,6 +12,7 @@ Kafka(Json)
 
 E-Mail，Kafka 文件
 
+规则是使用Json文件编写，位于resources/rules 目录下面,注释如下：
 
 
 ```go
@@ -49,7 +50,7 @@ detect_list:
 
 key : conn.ip                    // 只有frequency 类型的有，以此字段对应数据为key计数
 
-times: 10     // 只有frequency 类型的有，代表 flink 的滚动的时间窗口内出现 10次
+times: 10                        // 只有frequency 类型的有，代表 flink 的滚动的时间窗口内出现 10次
 
 
 threat_level : high                       // 威胁等级
