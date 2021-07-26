@@ -5,7 +5,6 @@ import org.apache.flink.util.PropertiesUtil;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,16 +12,12 @@ import java.io.InputStreamReader;
 
 public class utils {
 
-
     public static void main(String[] args){
-
         System.out.println(utils.GetJsonRule("rules/dns.json").toString());
     }
 
     public static ParameterTool getParameterTool(){
-
         final Logger log = LoggerFactory.getLogger(utils.class);
-
         try {
             return ParameterTool
                     .fromPropertiesFile(PropertiesUtil.class.getResourceAsStream("application.properties"));
@@ -34,7 +29,6 @@ public class utils {
 
 
     public static JSONArray GetJsonRule (String name) {
-
         StringBuffer stringBuffer = new StringBuffer();
         try {
             InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
@@ -48,5 +42,6 @@ public class utils {
         }
         return new JSONArray(stringBuffer.toString());
     }
+
 }
 
