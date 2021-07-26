@@ -1,16 +1,18 @@
 package secnj;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import java.io.File;
 import java.util.HashMap;
+
+//import org.json.JSONObject;
 
 public class  RuleEngine{
     private final static HashMap<String, JSONArray> rules = new HashMap<>();
     public static void main(String[] args){
       RuleEngine test =  new RuleEngine();
 
-      test.RuleCheck(new JSONObject());
+      test.RuleCheck(new JSONObject ());
     }
 
     public RuleEngine(){

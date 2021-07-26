@@ -1,14 +1,16 @@
 package secnj;
 
+import com.alibaba.fastjson.JSONArray;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.util.PropertiesUtil;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+
 
 public class utils {
 
@@ -40,7 +42,7 @@ public class utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new JSONArray(stringBuffer.toString());
+        return JSONArray.parseArray(stringBuffer.toString());
     }
 
 }
