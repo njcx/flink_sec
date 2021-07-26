@@ -1,16 +1,19 @@
 package secnj;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 
 public class  RuleEngine{
+    private final static HashMap<String, JSONArray> rules = new HashMap<>();
     public static void main(String[] args){
-        new RuleEngine();
+      RuleEngine test =  new RuleEngine();
+
+      test.RuleCheck(new JSONObject());
     }
 
     public RuleEngine(){
-        HashMap<String, JSONArray> rules = new HashMap<>();
         String path = Thread.currentThread().getContextClassLoader().getResource("rules").getPath();
         File file = new File(path);
         File[] fs = file.listFiles();
@@ -20,5 +23,18 @@ public class  RuleEngine{
             rules.put(ruleType,utils.GetJsonRule("rules/"+f.getName()));
             }
         }
+
+    }
+
+
+    public JSONObject RuleCheck(JSONObject res){
+
+        for(Object j: rules.get("ssh")){
+
+            System.out.println(j);
+        }
+
+        return new JSONObject();
+
     }
 }
