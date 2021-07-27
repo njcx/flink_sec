@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 
 public class  RuleEngine{
+
     private final HashMap<String, JSONArray> rules = new HashMap<>();
     public static void main(String[] args){
       RuleEngine test =  new RuleEngine();
@@ -32,6 +33,7 @@ public class  RuleEngine{
         for(Object j: rules.get("ssh")){
             System.out.println(j);
         }
+        
 
         return new JSONObject();
 

@@ -65,5 +65,11 @@
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe:config:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.76" level="project" />
+    <orderEntry type="library" name="Maven: com.github.wnameless.json:json-flattener:0.12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.9" level="project" />
+    <orderEntry type="library" name="Maven: com.github.wnameless.json:json-base:2.0.0" level="project" />
   </component>
 </module>

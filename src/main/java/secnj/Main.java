@@ -1,17 +1,21 @@
 package secnj;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.github.wnameless.json.flattener.JsonFlattener;
+import com.github.wnameless.json.unflattener.JsonUnflattener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.typeinfo.TypeHint;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -19,7 +23,6 @@ import java.util.Properties;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		Config config = ConfigFactory.load();
-
 		ParserConfig.getGlobalInstance().setSafeMode(true);
 
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -30,8 +33,8 @@ public class Main {
 		FlinkKafkaConsumer<String> secConsumer = new FlinkKafkaConsumer<>(config.getString("input.kafka.topic"), new SimpleStringSchema(),
 				properties);
 
-		SingleOutputStreamOperator<JSONObject> StreamRecord = env.addSource(secConsumer)
-				.map(string -> JSON.parseObject(string));
+		SingleOutputStreamOperator<Map<String, Object>> StreamRecord = env.addSource(secConsumer)
+				.map(string -> JsonFlattener.flattenAsMap(string)).returns(TypeInformation.of(new TypeHint<Map<String, Object>>(){}));
 
         DataStream<String> result = StreamRecord.map(new JsonSting());
 		result.addSink(new FlinkKafkaProducer<>(config.getString("output.kafka.server"), config.getString("output.kafka.topic"), new SimpleStringSchema()));
@@ -42,8 +45,8 @@ public class Main {
 }
 
 
-class JsonSting implements MapFunction<JSONObject,String>{
-	public String map(JSONObject j) {
-		return j.toString();
+class JsonSting implements MapFunction<Map<String, Object>,String>{
+	public String map(Map<String, Object> j) {
+		return JsonUnflattener.unflatten(j);
 	}
 }
