@@ -1,5 +1,8 @@
 package secnj;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -7,13 +10,25 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 public class Email {
-    public static String myEmailAccount = "****";//邮箱账号
-    public static String myEmailPassword = "****";//邮箱密码
-    public static String myEmailSMTPHost = "smtp.ym.163.com";//发送邮箱服务器地址（这个地址是网易企业邮箱的地址）
-    public static void sendEmail(String text,String receiveEmail) throws Exception {
+
+
+    private   String EmailAccount ;
+    private   String EmailPassword ;
+    private   String EmailSMTPHost ;
+
+
+
+    public Email(){
+        Config config = ConfigFactory.load();
+        EmailAccount = config.getString("output.email.email_username");
+        EmailPassword = config.getString("output.email.email_pwd");
+        EmailSMTPHost = config.getString("output.email.email_host");
+    }
+
+    public void sendEmail(String text,String receiveEmail) throws Exception {
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.smtp.host", myEmailSMTPHost);
+        props.setProperty("mail.smtp.host", EmailAccount);
         props.setProperty("mail.smtp.auth", "true");
         final String smtpPort = "994";
         props.setProperty("mail.smtp.port", smtpPort);
@@ -22,9 +37,9 @@ public class Email {
         props.setProperty("mail.smtp.socketFactory.port", smtpPort);
         Session session = Session.getDefaultInstance(props);
         session.setDebug(true);                                 // 设置为debug模式, 可以查看详细的发送 log
-        MimeMessage message = createMimeMessage(session, myEmailAccount, receiveEmail,text);
+        MimeMessage message = createMimeMessage(session, EmailAccount, receiveEmail,text);
         Transport transport = session.getTransport();
-        transport.connect(myEmailAccount, myEmailPassword);
+        transport.connect(EmailAccount, EmailPassword);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
     }
@@ -40,7 +55,7 @@ public class Email {
         message.saveChanges();
         return message;
     }
-    public static void main(String[] args) throws Exception {
-        sendEmail("这是内容，验证码45845","183****1265@163.com");
-    }
+//    public static void main(String[] args) throws Exception {
+//        sendEmail("这是内容，验证码45845","183****1265@163.com");
+//    }
 }

@@ -19,6 +19,7 @@ import java.util.Properties;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		Config config = ConfigFactory.load();
+
 		ParserConfig.getGlobalInstance().setSafeMode(true);
 
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -26,9 +27,10 @@ public class Main {
 		Properties properties = new Properties();
 		properties.setProperty("bootstrap.servers", config.getString("input.kafka.server"));
 		properties.setProperty("group.id", config.getString("input.kafka.group_id"));
-		FlinkKafkaConsumer<String> myConsumer = new FlinkKafkaConsumer<>(config.getString("input.kafka.topic"), new SimpleStringSchema(),
+		FlinkKafkaConsumer<String> secConsumer = new FlinkKafkaConsumer<>(config.getString("input.kafka.topic"), new SimpleStringSchema(),
 				properties);
-		SingleOutputStreamOperator<JSONObject> StreamRecord = env.addSource(myConsumer)
+
+		SingleOutputStreamOperator<JSONObject> StreamRecord = env.addSource(secConsumer)
 				.map(string -> JSON.parseObject(string));
 
         DataStream<String> result = StreamRecord.map(new JsonSting());

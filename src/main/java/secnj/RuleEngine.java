@@ -7,10 +7,9 @@ import java.util.HashMap;
 
 
 public class  RuleEngine{
-    private final static HashMap<String, JSONArray> rules = new HashMap<>();
+    private final HashMap<String, JSONArray> rules = new HashMap<>();
     public static void main(String[] args){
       RuleEngine test =  new RuleEngine();
-
       test.RuleCheck(new JSONObject ());
     }
 
@@ -31,7 +30,6 @@ public class  RuleEngine{
     public JSONObject RuleCheck(JSONObject res){
 
         for(Object j: rules.get("ssh")){
-
             System.out.println(j);
         }
 
