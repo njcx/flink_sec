@@ -2,7 +2,6 @@ package secnj;
 
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.github.wnameless.json.flattener.JsonFlattener;
-import com.github.wnameless.json.unflattener.JsonUnflattener;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -36,7 +35,7 @@ public class Main {
 		SingleOutputStreamOperator<Map<String, Object>> StreamRecord = env.addSource(secConsumer)
 				.map(string -> JsonFlattener.flattenAsMap(string)).returns(TypeInformation.of(new TypeHint<Map<String, Object>>(){}));
 
-		DataStream<String> result = StreamRecord.map(new JsonSting());
+		DataStream<String> result = StreamRecord.map(new RuleE());
 		result.addSink(new FlinkKafkaProducer<>(config.getString("output.kafka.server"), config.getString("output.kafka.topic"), new SimpleStringSchema()));
 		env.execute("Rule-engine for NIDS");
 
@@ -45,10 +44,9 @@ public class Main {
 }
 
 
-class JsonSting implements MapFunction<Map<String, Object>,String>{
+class RuleE implements MapFunction<Map<String, Object>,String>{
 
 	public String map(Map<String, Object> j) {
-		RuleEngine.ResCheck(j);
-		return JsonUnflattener.unflatten(j);
+		return RuleEngine.ResCheck(j);
 	}
 }

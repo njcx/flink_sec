@@ -33,7 +33,6 @@ detect_list:
   - field : conn.conn_state              //  字段
     type: re                             //  正则
     rule: S0                             //  具体规则
-    ignorecase: false                    //  是否忽略大小写
 
   - field : conn.proto                   //  字段
     type: equal                          //  等于

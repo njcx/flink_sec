@@ -118,8 +118,7 @@
       {
         "field" : "network.ip",
         "type": "re",
-        "rule": "xxx",
-        "ignorecase": "False"
+        "rule": "xxx"
       },
 
       {
