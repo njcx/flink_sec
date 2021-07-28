@@ -2,7 +2,7 @@
 [
   {
     "state": "enable",
-    "rule_id": "sqli_get_01",
+    "rule_id": "dns_01",
     "rule_tag": "sqli",
     "rule_name": "sqli_get_select",
     "rule_type": "and",
@@ -37,7 +37,7 @@
 
   {
     "state": "enable",
-    "rule_id": "sqli_get_01",
+    "rule_id": "dns_02",
     "rule_tag": "sqli",
     "rule_name": "sqli_get_select",
     "rule_type": "or",
@@ -73,7 +73,7 @@
 
   {
     "state": "enable",
-    "rule_id":"sqli_get_01",
+    "rule_id":"dns_03",
     "rule_tag":"sqli",
     "rule_name":"sqli_get_select",
     "rule_type":"frequency_or",
@@ -109,7 +109,7 @@
 
   {
     "state": "enable",
-    "rule_id":"sqli_get_01",
+    "rule_id":"dns_04",
     "rule_tag":"sqli",
     "rule_name":"sqli_get_select",
     "rule_type":"frequency_and",

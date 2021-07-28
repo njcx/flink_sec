@@ -11,13 +11,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-
 public class utils {
 
     public static void main(String[] args){
         System.out.println(utils.GetJsonRule("rules/dns.json").toString());
     }
-
     public static ParameterTool getParameterTool(){
         final Logger log = LoggerFactory.getLogger(utils.class);
         try {

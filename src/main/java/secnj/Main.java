@@ -25,8 +25,6 @@ public class Main {
 		Config config = ConfigFactory.load();
 		ParserConfig.getGlobalInstance().setSafeMode(true);
 
-
-
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.enableCheckpointing(1000);
 		Properties properties = new Properties();
@@ -50,7 +48,7 @@ public class Main {
 class JsonSting implements MapFunction<Map<String, Object>,String>{
 
 	public String map(Map<String, Object> j) {
-		RuleEngine.RuleCheck(j);
+		RuleEngine.ResCheck(j);
 		return JsonUnflattener.unflatten(j);
 	}
 }

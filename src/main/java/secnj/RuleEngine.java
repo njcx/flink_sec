@@ -1,5 +1,6 @@
 package secnj;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.typesafe.config.Config;
@@ -29,53 +30,46 @@ public class  RuleEngine{
         }
     }
 
-    public static JSONObject RuleCheck(Map<String, Object> res){
+    public static JSONObject ResCheck(Map<String, Object> res){
 
         String type = res.get(config.getString("kafka.type.key")).toString();
-
         if(type.contains("conn")){
             for(Object j: rules.get("ssh")){
-                System.out.println(j);
+                RuleEngine.RuleCheck(res,j);
             }
         }
 
         if(type.contains("dns")){
-
             for(Object j: rules.get("dns")){
-                System.out.println(j);
+                RuleEngine.RuleCheck(res,j);
             }
-
         }
-
-
 
         if(type.contains("http")){
-
             for(Object j: rules.get("http")){
-                System.out.println(j);
+                RuleEngine.RuleCheck(res,j);
             }
-
-
         }
-
-
-
         if(type.contains("mysql")){
-
             for(Object j: rules.get("mysql")){
-                System.out.println(j);
+                RuleEngine.RuleCheck(res,j);
             }
-
-
         }
-
         if(type.contains("ssh")){
             for(Object j: rules.get("ssh")){
-                System.out.println(j);
+                RuleEngine.RuleCheck(res,j);
             }
         }
-
         return new JSONObject();
 
+    }
+
+    public static void RuleCheck(Map<String, Object> res, Object rule_) {
+        JSONObject rule = JSONObject.parseObject(rule_.toString());
+        if (rule.get("state").toString().equals("enable")){
+         JSONArray  detect_list = JSON.parseArray(rule.get("detect_list").toString());
+         System.out.println(detect_list);
+
+        }
     }
 }
