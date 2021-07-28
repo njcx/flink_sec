@@ -25,6 +25,8 @@ public class Main {
 		Config config = ConfigFactory.load();
 		ParserConfig.getGlobalInstance().setSafeMode(true);
 
+
+
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.enableCheckpointing(1000);
 		Properties properties = new Properties();
@@ -36,7 +38,7 @@ public class Main {
 		SingleOutputStreamOperator<Map<String, Object>> StreamRecord = env.addSource(secConsumer)
 				.map(string -> JsonFlattener.flattenAsMap(string)).returns(TypeInformation.of(new TypeHint<Map<String, Object>>(){}));
 
-        DataStream<String> result = StreamRecord.map(new JsonSting());
+		DataStream<String> result = StreamRecord.map(new JsonSting());
 		result.addSink(new FlinkKafkaProducer<>(config.getString("output.kafka.server"), config.getString("output.kafka.topic"), new SimpleStringSchema()));
 		env.execute("Rule-engine for NIDS");
 
@@ -46,7 +48,9 @@ public class Main {
 
 
 class JsonSting implements MapFunction<Map<String, Object>,String>{
+
 	public String map(Map<String, Object> j) {
+		RuleEngine.RuleCheck(j);
 		return JsonUnflattener.unflatten(j);
 	}
 }
